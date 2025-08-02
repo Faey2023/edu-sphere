@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusCircle, Edit, Trash2, Eye, Search } from "lucide-react";
+import { PlusCircle, Edit, Trash2, Search } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -131,9 +131,6 @@ const TeacherTab = () => {
                         <TableCell>{teacher.phone || "-"}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
-                            <Button variant="ghost" size="sm">
-                              <Eye className="h-4 w-4" />
-                            </Button>
                             <Button variant="ghost" size="sm">
                               <Edit className="h-4 w-4" />
                             </Button>
