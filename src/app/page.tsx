@@ -9,16 +9,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { BookOpen, Users, Award, Calendar } from "lucide-react";
 import Link from "next/link";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 
-export default function HomePage() {
+const Home = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
-
       <main className="flex-1">
-        {/* Hero Section */}
+        {/* hero Section */}
         <section className="bg-gradient-to-br from-primary/10 to-secondary/10 py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
@@ -42,7 +38,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* About Section */}
+        {/* about */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -99,7 +95,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Featured Teachers Section */}
+        {/* featured section */}
         <section className="py-16 bg-muted">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
@@ -143,7 +139,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Latest Notices Section */}
+        {/* latest notice */}
         <section className="py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center mb-8">
@@ -201,7 +197,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Contact Section */}
+        {/* contact section */}
         <section className="py-16 bg-primary text-primary-foreground">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl font-bold mb-4">
@@ -216,8 +212,8 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
-}
+};
+
+export default Home;

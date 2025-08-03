@@ -67,7 +67,7 @@ const Navbar = () => {
             </DropdownMenu>
 
             <Button>
-              <Link href="/admin/login">Admin Login</Link>
+              <Link href="/auth/login">Login</Link>
             </Button>
           </div>
 
