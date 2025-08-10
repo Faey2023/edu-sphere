@@ -1,55 +1,141 @@
 "use client";
 
-import React, { useState } from "react";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+import Link from "next/link";
+
 import {
   loginSuccess,
   authFailure,
   startLoading,
 } from "@/lib/slice/auth/authSlice";
 import type { RootState, AppDispatch } from "@/lib/store";
-import Link from "next/link";
-import { IUser } from "@/types";
-import Swal from "sweetalert2";
+import type { IUser } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+
+type LoginFormValues = {
+  email: string;
+  password: string;
+};
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [localError, setLocalError] = useState("");
-
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
+  const { loading } = useSelector((state: RootState) => state.auth);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLocalError("");
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+    setError,
+  } = useForm<LoginFormValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    if (!email || !password) {
-      setLocalError("Email and password are required");
-      return;
-    }
+  // const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
+  //   dispatch(startLoading());
 
+  //   try {
+  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (!res.ok) {
+  //       const errorData: { message: string } = await res.json();
+  //       dispatch(authFailure(errorData.message || "Login failed"));
+  //       setError("email", { message: errorData.message || "Login failed" });
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: errorData.message || "Login failed",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //       return;
+  //     }
+
+  //     const jsonData: { user: IUser } = await res.json();
+  //     dispatch(loginSuccess(jsonData.user));
+
+  //     if (typeof window !== "undefined") {
+  //       localStorage.setItem("user", JSON.stringify(jsonData.user));
+  //     }
+
+  //     Swal.fire({
+  //       icon: "success",
+  //       title: "Login Successful!",
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     });
+  //     console.log(data)
+
+  //     // switch (data.user.role) {
+  //     //   case "Admin":
+  //     //     router.push("/admin/dashboard");
+  //     //     break;
+  //     //   case "Student":
+  //     //     router.push("/student/dashboard");
+  //     //     break;
+
+  //     //   default:
+  //     //     router.push("/");
+  //     // }
+
+  //     // router.push("/");
+  //   } catch (err: unknown) {
+  //     let message = "Login failed";
+
+  //     if (err instanceof Error) {
+  //       message = err.message;
+  //     }
+
+  //     dispatch(authFailure(message));
+  //     Swal.fire({
+  //       icon: "error",
+  //       title: message,
+  //       showConfirmButton: false,
+  //       timer: 1500,
+  //     });
+  //   }
+  // };
+
+  const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     dispatch(startLoading());
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(data),
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
+        const errorData: { message: string } = await res.json();
         dispatch(authFailure(errorData.message || "Login failed"));
-        setLocalError(errorData.message || "Login failed");
+        setError("email", { message: errorData.message || "Login failed" });
+        Swal.fire({
+          icon: "error",
+          title: errorData.message || "Login failed",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         return;
       }
 
-      const data: { user: IUser } = await res.json();
+      const jsonData: { user: IUser } = await res.json();
+      dispatch(loginSuccess(jsonData.user));
 
-      dispatch(loginSuccess(data.user));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(jsonData.user));
+      }
 
       Swal.fire({
         icon: "success",
@@ -58,32 +144,31 @@ const LoginForm = () => {
         timer: 1500,
       });
 
-      if (typeof window !== "undefined") {
-        localStorage.setItem("user", JSON.stringify(data.user));
+      // Use jsonData.user.role instead of data.user.role
+      switch (jsonData.user.role) {
+        case "Admin":
+          router.push("/admin/dashboard");
+          break;
+        case "Student":
+          router.push("/student/dashboard");
+          break;
+        case "Editor":
+          router.push("/editor/dashboard");
+          break;
+        default:
+          router.push("/");
+      }
+    } catch (err: unknown) {
+      let message = "Login failed";
+
+      if (err instanceof Error) {
+        message = err.message;
       }
 
-      // switch (data.user.role) {
-      //   case "Admin":
-      //     router.push("/admin/dashboard");
-      //     break;
-      //   case "Student":
-      //     router.push("/student/dashboard");
-      //     break;
-      //   case "Editor":
-      //     router.push("/editor/dashboard");
-      //     break;
-      //   default:
-      //     router.push("/");
-      // }
-      router.push("/");
-    } catch (err: any) {
-      dispatch(authFailure(err.message || "Login failed"));
-      // setLocalError(err.message || "Login failed");
-      console.log(err);
+      dispatch(authFailure(message));
       Swal.fire({
         icon: "error",
-        title: `${err.message}`,
-        // title: `${err.response?.data?.message}`,
+        title: message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -98,50 +183,63 @@ const LoginForm = () => {
           Sign in to your account to continue
         </p>
 
-        {localError && (
-          <div className="mb-4 rounded-md bg-red-100 p-3 text-red-700">
-            {localError}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           <div>
-            <label htmlFor="email" className="block mb-1 font-medium">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <Label htmlFor="email">Email</Label>
+            <Controller
+              name="email"
+              control={control}
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /\S+@\S+\.\S+/,
+                  message: "Invalid email address",
+                },
+              }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="email"
+                  placeholder="Enter your email"
+                  autoComplete="email"
+                />
+              )}
             />
+            {errors.email && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
           <div>
-            <label htmlFor="password" className="block mb-1 font-medium">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="w-full rounded border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            <Label htmlFor="password">Password</Label>
+            <Controller
+              name="password"
+              control={control}
+              rules={{
+                required: "Password is required",
+                minLength: { value: 6, message: "Minimum 6 characters" },
+              }}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  type="password"
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                />
+              )}
             />
+            {errors.password && (
+              <p className="text-xs text-red-500 mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-60"
-          >
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Signing in..." : "Sign In"}
-          </button>
+          </Button>
         </form>
 
         <div className="mt-5 text-gray-600 text-center text-sm space-y-3">
