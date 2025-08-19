@@ -27,7 +27,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Layout from "../../components/dashboard/Layout";
-import TeacherTab from "@/components/dashboard/tables/TeacherTab";
+import TeacherTab from "@/components/dashboard/tabs/teacher/TeacherTab";
 
 type Status = "Active" | "Inactive" | "Published" | "Draft";
 
@@ -50,19 +50,19 @@ const AdminDashboard = () => {
       title: "Active Notices",
       value: "12",
       icon: FileText,
-      color: "from-secondary to-secondary-light",
+      color: "from-primary to-primary-light",
     },
     {
       title: "Upcoming Events",
       value: "8",
       icon: Calendar,
-      color: "from-accent to-accent-light",
+      color: "from-primary to-primary-light",
     },
     {
       title: "System Health",
       value: "98%",
       icon: Settings,
-      color: "from-success to-green-400",
+      color: "from-primary to-primary-light",
     },
   ];
 
@@ -99,7 +99,7 @@ const AdminDashboard = () => {
     <Layout>
       <div className="min-h-screen section-padding shrink-0 flex-1">
         <div className="container-academic">
-          {/* Header */}
+          {/* header */}
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Admin Dashboard</h1>
             <p className="text-muted-foreground">
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
             </p>
           </div>
 
-          {/* Stats Grid */}
+          {/* stats grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {adminStats.map((stat, index) => (
               <Card key={index} className="card-academic">
@@ -128,19 +128,18 @@ const AdminDashboard = () => {
             ))}
           </div>
 
-          {/* Main Content Tabs */}
+          {/* content */}
           <Tabs defaultValue="teachers" className="space-y-6">
             <TabsList className="grid w-full lg:w-auto grid-cols-4">
               <TabsTrigger value="teachers">Teachers</TabsTrigger>
               <TabsTrigger value="notices">Notices</TabsTrigger>
               <TabsTrigger value="events">Events</TabsTrigger>
-              <TabsTrigger value="settings">Settings</TabsTrigger>
             </TabsList>
 
-            {/* Teachers Tab */}
+            {/* teachers tab */}
             <TeacherTab />
 
-            {/* Notices Tab */}
+            {/* notices tab */}
             <TabsContent value="notices" className="space-y-6">
               <Card className="card-academic">
                 <CardHeader>
@@ -204,7 +203,7 @@ const AdminDashboard = () => {
               </Card>
             </TabsContent>
 
-            {/* Events Tab */}
+            {/* events tab */}
             <TabsContent value="events" className="space-y-6">
               <Card className="card-academic">
                 <CardHeader>
@@ -226,29 +225,6 @@ const AdminDashboard = () => {
                       <PlusCircle className="h-4 w-4 mr-2" />
                       Create Event
                     </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Settings Tab */}
-            <TabsContent value="settings" className="space-y-6">
-              <Card className="card-academic">
-                <CardHeader>
-                  <CardTitle>System Settings</CardTitle>
-                  <CardDescription>
-                    Configure system preferences and settings
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-center py-12">
-                    <Settings className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-                    <h3 className="text-lg font-semibold mb-2">
-                      System Configuration
-                    </h3>
-                    <p className="text-muted-foreground">
-                      Configure system settings and preferences
-                    </p>
                   </div>
                 </CardContent>
               </Card>

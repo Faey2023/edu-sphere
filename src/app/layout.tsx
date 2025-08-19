@@ -15,7 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Edu Sphere",
-  description: "Website where you can find everything about education.",
+  description:
+    "A premier educational institution committed to academic excellence and student success",
 };
 
 export default function RootLayout({

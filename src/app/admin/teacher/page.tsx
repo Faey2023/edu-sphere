@@ -168,7 +168,6 @@ const AddTeacherPage = () => {
             <CardContent>
               <FormProvider {...methods}>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-                  {/* Profile Image Upload */}
                   <Card>
                     <CardContent className="p-6">
                       <h3 className="text-lg font-semibold mb-4">
@@ -206,7 +205,6 @@ const AddTeacherPage = () => {
                     </CardContent>
                   </Card>
 
-                  {/* Basic Information */}
                   <Card>
                     <CardContent className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FormItem>
@@ -294,7 +292,6 @@ const AddTeacherPage = () => {
                     </CardContent>
                   </Card>
 
-                  {/* Form Actions */}
                   <div className="flex flex-col sm:flex-row gap-4 pt-6">
                     <Button
                       type="button"
