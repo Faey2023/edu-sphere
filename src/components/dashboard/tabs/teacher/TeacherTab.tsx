@@ -19,43 +19,93 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState, ChangeEvent } from "react";
 import { ITeacher } from "@/types";
-import { getTeachers } from "@/lib/slice/teacher/teacherService";
+import {
+  getTeachers,
+  updateTeacher,
+  deleteTeacher,
+} from "@/lib/slice/teacher/teacherService";
+import Swal from "sweetalert2";
 
 const TeacherTab = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [teachers, setTeachers] = useState<ITeacher[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const fetchTeachers = async (): Promise<void> => {
-      try {
-        setLoading(true);
-        const data: ITeacher[] = await getTeachers();
-        setTeachers(data);
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          console.error("Failed to fetch teachers:", error.message);
-        } else {
-          console.error("Failed to fetch teachers:", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  const [editingTeacher, setEditingTeacher] = useState<ITeacher | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
+  useEffect(() => {
     fetchTeachers();
   }, []);
+
+  const fetchTeachers = async (): Promise<void> => {
+    try {
+      setLoading(true);
+      const data: ITeacher[] = await getTeachers();
+      setTeachers(data);
+    } catch (error: unknown) {
+      console.error("Failed to fetch teachers:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setSearchTerm(e.target.value);
+  };
 
   const filteredTeachers: ITeacher[] = teachers.filter((teacher) =>
     teacher.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setSearchTerm(e.target.value);
+  const handleEdit = (teacher: ITeacher): void => {
+    setEditingTeacher(teacher);
+    setIsDialogOpen(true);
+  };
+
+  const handleUpdate = async (): Promise<void> => {
+    if (!editingTeacher) return;
+    try {
+      await updateTeacher(editingTeacher._id, editingTeacher);
+      setIsDialogOpen(false);
+      fetchTeachers();
+      Swal.fire("Updated!", "Teacher details updated successfully.", "success");
+    } catch (error: unknown) {
+      Swal.fire("Error", "Failed to update teacher.", "error");
+    }
+  };
+
+  const handleDelete = async (id: string): Promise<void> => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "This action cannot be undone!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#6c757d",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteTeacher(id);
+        setTeachers((prev) => prev.filter((t) => t._id !== id));
+        Swal.fire("Deleted!", "Teacher has been deleted.", "success");
+      } catch (error: unknown) {
+        Swal.fire("Error", "Failed to delete teacher.", "error");
+      }
+    }
   };
 
   return (
@@ -72,7 +122,7 @@ const TeacherTab = () => {
               </div>
               <Link href="/admin/teacher">
                 <Button className="btn-academic">
-                  <PlusCircle className="h-4 w-4 mr-2" />
+                  <PlusCircle className="size-4 mr-2" />
                   Add Teacher
                 </Button>
               </Link>
@@ -81,7 +131,7 @@ const TeacherTab = () => {
           <CardContent>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 size-4 text-muted-foreground" />
                 <Input
                   placeholder="Search teachers..."
                   value={searchTerm}
@@ -114,7 +164,7 @@ const TeacherTab = () => {
                       <TableRow key={teacher._id}>
                         <TableCell className="flex items-center gap-2 font-medium">
                           {teacher.image && (
-                            <div className="w-8 h-8 rounded-full overflow-hidden border border-border">
+                            <div className="size-8 rounded-full overflow-hidden border border-border">
                               <Image
                                 src={teacher.image}
                                 alt={teacher.name}
@@ -131,11 +181,19 @@ const TeacherTab = () => {
                         <TableCell>{teacher.phone || "-"}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-2">
-                            <Button variant="ghost" size="sm">
-                              <Edit className="h-4 w-4" />
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleEdit(teacher)}
+                            >
+                              <Edit className="size-4" />
                             </Button>
-                            <Button variant="ghost" size="sm">
-                              <Trash2 className="h-4 w-4" />
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => handleDelete(teacher._id)}
+                            >
+                              <Trash2 className="size-4" />
                             </Button>
                           </div>
                         </TableCell>
@@ -154,6 +212,54 @@ const TeacherTab = () => {
           </CardContent>
         </Card>
       </TabsContent>
+
+      {/* Update Modal */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Teacher</DialogTitle>
+          </DialogHeader>
+          {editingTeacher && (
+            <div className="space-y-4">
+              <Input
+                value={editingTeacher.name}
+                onChange={(e) =>
+                  setEditingTeacher({ ...editingTeacher, name: e.target.value })
+                }
+                placeholder="Name"
+              />
+              <Input
+                value={editingTeacher.subject}
+                onChange={(e) =>
+                  setEditingTeacher({
+                    ...editingTeacher,
+                    subject: e.target.value,
+                  })
+                }
+                placeholder="Subject"
+              />
+              <Input
+                value={editingTeacher.email || ""}
+                readOnly
+                placeholder="Email"
+              />
+              <Input
+                value={editingTeacher.phone || ""}
+                onChange={(e) =>
+                  setEditingTeacher({
+                    ...editingTeacher,
+                    phone: e.target.value,
+                  })
+                }
+                placeholder="Phone"
+              />
+            </div>
+          )}
+          <DialogFooter>
+            <Button onClick={handleUpdate}>Save Changes</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

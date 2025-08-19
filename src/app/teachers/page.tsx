@@ -70,7 +70,9 @@ const TeachersPage = () => {
                           height={128}
                         />
                       </div>
-                      <CardTitle className="text-xl capitalize">{teacher.name}</CardTitle>
+                      <CardTitle className="text-xl capitalize">
+                        {teacher.name}
+                      </CardTitle>
                       <CardDescription className="text-primary font-semibold capitalize">
                         {teacher.subject}
                       </CardDescription>
@@ -79,7 +81,7 @@ const TeachersPage = () => {
                       <div className="space-y-2 pt-4 border-t border-border">
                         {teacher.email && (
                           <div className="flex items-center text-sm">
-                            <Mail className="h-4 w-4 mr-2 text-primary" />
+                            <Mail className="size-4 mr-2 text-primary" />
                             <a
                               href={`mailto:${teacher.email}`}
                               className="text-primary hover:underline"
@@ -90,7 +92,7 @@ const TeachersPage = () => {
                         )}
                         {teacher.phone && (
                           <div className="flex items-center text-sm">
-                            <Phone className="h-4 w-4 mr-2 text-primary" />
+                            <Phone className="size-4 mr-2 text-primary" />
                             <a
                               href={`tel:${teacher.phone}`}
                               className="text-muted-foreground hover:text-primary"

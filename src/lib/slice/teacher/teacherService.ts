@@ -33,7 +33,10 @@ export const getTeacherById = async (id: string): Promise<ITeacher> => {
 };
 
 // update teacher
-export const updateTeacher = async (id: string, data: ITeacher): Promise<ITeacher> => {
+export const updateTeacher = async (
+  id: string,
+  data: ITeacher
+): Promise<ITeacher> => {
   const res = await fetch(`${API_URL}/teacher/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
@@ -43,6 +46,22 @@ export const updateTeacher = async (id: string, data: ITeacher): Promise<ITeache
   if (!res.ok) {
     const errorData = await res.json();
     throw new Error(errorData.message || "Failed to update teacher");
+  }
+
+  return res.json();
+};
+
+// delete teacher
+export const deleteTeacher = async (
+  id: string
+): Promise<{ message: string }> => {
+  const res = await fetch(`${API_URL}/teacher/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Failed to delete teacher");
   }
 
   return res.json();

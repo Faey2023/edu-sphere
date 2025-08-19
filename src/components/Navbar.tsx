@@ -52,7 +52,7 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
-                  <Globe className="h-4 w-4 mr-2" />
+                  <Globe className="size-4 mr-2" />
                   {language}
                 </Button>
               </DropdownMenuTrigger>
@@ -77,11 +77,7 @@ const Navbar = () => {
               size="sm"
               onClick={() => setIsOpen(!isOpen)}
             >
-              {isOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
+              {isOpen ? <X className="size-6" /> : <Menu className="size-6" />}
             </Button>
           </div>
         </div>
@@ -104,7 +100,7 @@ const Navbar = () => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm">
-                      <Globe className="h-4 w-4 mr-2" />
+                      <Globe className="size-4 mr-2" />
                       {language}
                     </Button>
                   </DropdownMenuTrigger>

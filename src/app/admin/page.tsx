@@ -116,9 +116,9 @@ const AdminDashboard = () => {
                     {stat.title}
                   </CardTitle>
                   <div
-                    className={`w-8 h-8 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center text-white`}
+                    className={`size-8 bg-gradient-to-br ${stat.color} rounded-lg flex items-center justify-center text-white`}
                   >
-                    <stat.icon className="h-4 w-4" />
+                    <stat.icon className="size-4" />
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -151,7 +151,7 @@ const AdminDashboard = () => {
                       </CardDescription>
                     </div>
                     <Button className="btn-secondary-academic">
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="size-4 mr-2" />
                       Create Notice
                     </Button>
                   </div>
@@ -184,13 +184,13 @@ const AdminDashboard = () => {
                             <TableCell className="text-right">
                               <div className="flex justify-end gap-2">
                                 <Button variant="ghost" size="sm">
-                                  <Eye className="h-4 w-4" />
+                                  <Eye className="size-4" />
                                 </Button>
                                 <Button variant="ghost" size="sm">
-                                  <Edit className="h-4 w-4" />
+                                  <Edit className="size-4" />
                                 </Button>
                                 <Button variant="ghost" size="sm">
-                                  <Trash2 className="h-4 w-4" />
+                                  <Trash2 className="size-4" />
                                 </Button>
                               </div>
                             </TableCell>
@@ -222,7 +222,7 @@ const AdminDashboard = () => {
                       Create and manage school events and activities
                     </p>
                     <Button className="btn-accent-academic">
-                      <PlusCircle className="h-4 w-4 mr-2" />
+                      <PlusCircle className="size-4 mr-2" />
                       Create Event
                     </Button>
                   </div>

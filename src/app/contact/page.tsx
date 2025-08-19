@@ -58,7 +58,7 @@ const Contact = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center">
-                        <MapPin className="h-5 w-5 mr-2 text-primary" />
+                        <MapPin className="size-5 mr-2 text-primary" />
                         Main Office
                       </CardTitle>
                     </CardHeader>
@@ -77,7 +77,7 @@ const Contact = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center">
-                        <Phone className="h-5 w-5 mr-2 text-primary" />
+                        <Phone className="size-5 mr-2 text-primary" />
                         Phone Numbers
                       </CardTitle>
                     </CardHeader>
@@ -105,7 +105,7 @@ const Contact = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center">
-                        <Mail className="h-5 w-5 mr-2 text-primary" />
+                        <Mail className="size-5 mr-2 text-primary" />
                         Email Addresses
                       </CardTitle>
                     </CardHeader>
@@ -135,7 +135,7 @@ const Contact = () => {
                   <Card>
                     <CardHeader>
                       <CardTitle className="flex items-center">
-                        <Clock className="h-5 w-5 mr-2 text-primary" />
+                        <Clock className="size-5 mr-2 text-primary" />
                         Office Hours
                       </CardTitle>
                     </CardHeader>
@@ -172,7 +172,7 @@ const Contact = () => {
                 <Card>
                   <CardHeader>
                     <CardTitle className="flex items-center">
-                      <MessageSquare className="h-5 w-5 mr-2 text-primary" />
+                      <MessageSquare className="size-5 mr-2 text-primary" />
                       Send us a Message
                     </CardTitle>
                     <CardDescription>
@@ -236,7 +236,7 @@ const Contact = () => {
                 <Card className="border-destructive/20 bg-destructive/5">
                   <CardHeader>
                     <CardTitle className="flex items-center text-destructive">
-                      <AlertTriangle className="h-5 w-5 mr-2" />
+                      <AlertTriangle className="size-5 mr-2" />
                       Complaint Cell
                     </CardTitle>
                     <CardDescription>

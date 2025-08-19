@@ -187,7 +187,7 @@ const Home = () => {
                       </Badge>
                     </div>
                     <CardDescription className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-2" />
+                      <Calendar className="size-4 mr-2" />
                       {notice.date}
                     </CardDescription>
                   </CardHeader>
