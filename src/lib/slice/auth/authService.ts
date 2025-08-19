@@ -1,7 +1,7 @@
 import { IUser } from "@/types";
 import axios from "axios";
 
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const registerApi = async (data: {
   firstName: string;

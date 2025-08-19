@@ -39,74 +39,6 @@ const LoginForm = () => {
     },
   });
 
-  // const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-  //   dispatch(startLoading());
-
-  //   try {
-  //     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (!res.ok) {
-  //       const errorData: { message: string } = await res.json();
-  //       dispatch(authFailure(errorData.message || "Login failed"));
-  //       setError("email", { message: errorData.message || "Login failed" });
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: errorData.message || "Login failed",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       return;
-  //     }
-
-  //     const jsonData: { user: IUser } = await res.json();
-  //     dispatch(loginSuccess(jsonData.user));
-
-  //     if (typeof window !== "undefined") {
-  //       localStorage.setItem("user", JSON.stringify(jsonData.user));
-  //     }
-
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Login Successful!",
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     });
-  //     console.log(data)
-
-  //     // switch (data.user.role) {
-  //     //   case "Admin":
-  //     //     router.push("/admin/dashboard");
-  //     //     break;
-  //     //   case "Student":
-  //     //     router.push("/student/dashboard");
-  //     //     break;
-
-  //     //   default:
-  //     //     router.push("/");
-  //     // }
-
-  //     // router.push("/");
-  //   } catch (err: unknown) {
-  //     let message = "Login failed";
-
-  //     if (err instanceof Error) {
-  //       message = err.message;
-  //     }
-
-  //     dispatch(authFailure(message));
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: message,
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     });
-  //   }
-  // };
-
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     dispatch(startLoading());
 
@@ -144,7 +76,6 @@ const LoginForm = () => {
         timer: 1500,
       });
 
-      // Use jsonData.user.role instead of data.user.role
       switch (jsonData.user.role) {
         case "Admin":
           router.push("/admin/dashboard");

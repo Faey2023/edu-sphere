@@ -12,3 +12,12 @@ export interface AuthState {
   loading: boolean;
   error: string | null;
 }
+
+export interface ITeacher {
+  _id?: string;
+  name: string;
+  subject: string;
+  email?: string;
+  phone?: string;
+  image?: string;
+}
