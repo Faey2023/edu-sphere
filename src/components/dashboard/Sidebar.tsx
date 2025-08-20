@@ -24,7 +24,7 @@ const items = [
   },
   {
     title: "Notice",
-    url: "#",
+    url: "/admin/notice",
     icon: NotebookPen,
   },
   {

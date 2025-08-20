@@ -84,38 +84,6 @@ const AddTeacherPage = () => {
     return data.data.url;
   };
 
-  // const onSubmit: SubmitHandler<ITeacher> = async (data) => {
-  //   dispatch(startLoading());
-  //   try {
-  //     let imageUrl = "";
-  //     if (selectedImage) {
-  //       imageUrl = await uploadToImgBB(selectedImage);
-  //     }
-
-  //     const teacherData = { ...data, image: imageUrl };
-  //     const newTeacher = await createTeacher(teacherData as any);
-  //     dispatch(addTeacherSuccess(newTeacher));
-  //     Swal.fire({
-  //       icon: "success",
-  //       title: "Teacher Added Successfully",
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     });
-  //     router.push("/admin");
-  //   } catch (error: any) {
-  //     dispatch(setError(error.message));
-  //     console.log(error.message);
-  //     Swal.fire({
-  //       icon: "error",
-  //       title: "Failed to add teacher: " + error.message,
-  //       showConfirmButton: false,
-  //       timer: 1500,
-  //     });
-  //   }
-  // };
-
-  // If ITeacher type is like this:
-
   const onSubmit: SubmitHandler<ITeacher> = async (data) => {
     dispatch(startLoading());
     try {
@@ -152,8 +120,8 @@ const AddTeacherPage = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen section-padding">
-        <div className="container-academic">
+      <div className="min-h-screen">
+        <div className="container">
           <div className="mb-8">
             <h1 className="text-4xl font-bold mb-2">Add New Teacher</h1>
             <p className="text-muted-foreground">

@@ -14,10 +14,21 @@ export interface AuthState {
 }
 
 export interface ITeacher {
-  _id?: string;
+  _id: string;
   name: string;
   subject: string;
-  email?: string;
-  phone?: string;
-  image?: string;
+  email: string;
+  phone: string;
+  image: string;
+}
+
+export interface INotice {
+  _id: string;
+  title: string;
+  description: string;
+  type: string;
+  date: string;
+  attachment: string;
+  createdAt: string;
+  updatedAt: string;
 }

@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { BookOpen, Users, Award, Calendar } from "lucide-react";
+import { BookOpen, Users, Award } from "lucide-react";
 import Link from "next/link";
+import FeaturedTeachers from "@/components/home/FeaturedTeachers";
+import LatestNotice from "@/components/home/LatestNotice";
 
 const Home = () => {
   return (
@@ -96,106 +96,10 @@ const Home = () => {
         </section>
 
         {/* featured section */}
-        <section className="py-16 bg-muted">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Our Distinguished Faculty
-              </h2>
-              <p className="text-muted-foreground">
-                Meet some of our experienced educators who are passionate about
-                teaching.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <Card key={i}>
-                  <CardHeader className="text-center">
-                    <div className="w-24 h-24 bg-primary/20 rounded-full mx-auto mb-4 flex items-center justify-center">
-                      <Users className="h-12 w-12 text-primary" />
-                    </div>
-                    <CardTitle>Dr. Teacher Name {i}</CardTitle>
-                    <CardDescription>Subject Specialist</CardDescription>
-                  </CardHeader>
-                  <CardContent className="text-center">
-                    <Badge variant="secondary" className="mb-2">
-                      PhD in Education
-                    </Badge>
-                    <p className="text-sm text-muted-foreground">
-                      15+ years of teaching experience with expertise in modern
-                      pedagogical methods.
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="text-center mt-8">
-              <Button variant="outline" asChild>
-                <Link href="/teachers">View All Teachers</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <FeaturedTeachers />
 
         {/* latest notice */}
-        <section className="py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-3xl font-bold text-foreground">
-                Latest Notices
-              </h2>
-              <Button variant="outline" asChild>
-                <Link href="/notices">View All Notices</Link>
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                {
-                  title: "Annual Examination Schedule Released",
-                  date: "2024-01-15",
-                  type: "exam",
-                },
-                {
-                  title: "New Semester Registration Open",
-                  date: "2024-01-10",
-                  type: "announcement",
-                },
-                {
-                  title: "Science Fair Competition 2024",
-                  date: "2024-01-08",
-                  type: "event",
-                },
-                {
-                  title: "Holiday Notice - National Day",
-                  date: "2024-01-05",
-                  type: "holiday",
-                },
-              ].map((notice, i) => (
-                <Card key={i}>
-                  <CardHeader>
-                    <div className="flex justify-between items-start">
-                      <CardTitle className="text-lg">{notice.title}</CardTitle>
-                      <Badge
-                        variant={
-                          notice.type === "exam" ? "destructive" : "secondary"
-                        }
-                      >
-                        {notice.type}
-                      </Badge>
-                    </div>
-                    <CardDescription className="flex items-center">
-                      <Calendar className="size-4 mr-2" />
-                      {notice.date}
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
+        <LatestNotice />
 
         {/* contact section */}
         <section className="py-16 bg-primary text-primary-foreground">

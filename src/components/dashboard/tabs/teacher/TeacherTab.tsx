@@ -83,6 +83,7 @@ const TeacherTab = () => {
       Swal.fire("Updated!", "Teacher details updated successfully.", "success");
     } catch (error: unknown) {
       Swal.fire("Error", "Failed to update teacher.", "error");
+      console.log(error);
     }
   };
 
@@ -104,6 +105,7 @@ const TeacherTab = () => {
         Swal.fire("Deleted!", "Teacher has been deleted.", "success");
       } catch (error: unknown) {
         Swal.fire("Error", "Failed to delete teacher.", "error");
+        console.log(error);
       }
     }
   };
@@ -213,7 +215,7 @@ const TeacherTab = () => {
         </Card>
       </TabsContent>
 
-      {/* Update Modal */}
+      {/* update modal */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent>
           <DialogHeader>
