@@ -10,17 +10,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLocale } from "@/context/LocaleContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [language, setLanguage] = useState("EN");
+  const { locale, setLocale } = useLocale();
 
   const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/teachers", label: "Teachers" },
-    { href: "/notices", label: "Notices" },
-    { href: "/exams", label: "Exams" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: { en: "Home", bn: "হোম" } },
+    { href: "/teachers", label: { en: "Teachers", bn: "শিক্ষক" } },
+    { href: "/notices", label: { en: "Notices", bn: "নোটিশ" } },
+    { href: "/exams", label: { en: "Exams", bn: "পরীক্ষা" } },
+    { href: "/contact", label: { en: "Contact", bn: "যোগাযোগ" } },
   ];
 
   return (
@@ -33,34 +34,30 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* desktop nav */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-baseline space-x-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
+          {/* Desktop Nav */}
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="ml-10 flex items-baseline space-x-4">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-foreground hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                {item.label[locale]}
+              </Link>
+            ))}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm">
                   <Globe className="size-4 mr-2" />
-                  {language}
+                  {locale.toUpperCase()}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => setLanguage("EN")}>
+                <DropdownMenuItem onClick={() => setLocale("en")}>
                   English
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setLanguage("BN")}>
+                <DropdownMenuItem onClick={() => setLocale("bn")}>
                   বাংলা
                 </DropdownMenuItem>
               </DropdownMenuContent>
@@ -71,6 +68,7 @@ const Navbar = () => {
             </Button>
           </div>
 
+          {/* Mobile Nav */}
           <div className="md:hidden">
             <Button
               variant="ghost"
@@ -82,7 +80,6 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* mobile nav */}
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -93,22 +90,23 @@ const Navbar = () => {
                   className="text-foreground hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
                   onClick={() => setIsOpen(false)}
                 >
-                  {item.label}
+                  {item.label[locale]}
                 </Link>
               ))}
+
               <div className="flex items-center space-x-2 px-3 py-2">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm">
                       <Globe className="size-4 mr-2" />
-                      {language}
+                      {locale.toUpperCase()}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem onClick={() => setLanguage("EN")}>
+                    <DropdownMenuItem onClick={() => setLocale("en")}>
                       English
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setLanguage("BN")}>
+                    <DropdownMenuItem onClick={() => setLocale("bn")}>
                       বাংলা
                     </DropdownMenuItem>
                   </DropdownMenuContent>
